@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "repo-analyzer"
+version = "1.0.0"
+description = "Analyze GitHub repositories and local Git workspaces from your terminal."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "RepoAnalyzer Contributors" }]
+keywords = ["git", "github", "analytics", "cli", "rich", "typer"]
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Version Control :: Git",
+]
+dependencies = [
+    "typer>=0.12,<1.0",
+    "rich>=13.7,<14.0",
+    "PyGithub>=2.3,<3.0",
+    "GitPython>=3.1,<4.0",
+    "pydantic>=2.7,<3.0",
+    "python-dotenv>=1.0,<2.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.2,<9.0"]
+
+[project.scripts]
+repo-analyzer = "main:app"
+
+[tool.setuptools]
+packages = ["analyzer", "commands", "models", "utils"]
+py-modules = ["main"]
+
+[tool.setuptools.package-data]
+"*" = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+# typer.Argument()/typer.Option() calls in parameter defaults are the idiomatic
+# Typer pattern; B008's function-call-in-default rule does not apply here.
+"commands/**" = ["B008"]
+
+[tool.mypy]
+python_version = "3.12"
+files = ["analyzer", "commands", "models", "utils", "main.py"]
+explicit_package_bases = true
+mypy_path = "."
+disallow_untyped_defs = true
+warn_redundant_casts = true
+no_implicit_optional = true
+ignore_missing_imports = true

@@ -1,0 +1,26 @@
+# Secrets / local configuration
+.env
+config.toml
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+# Tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# App artifacts
+repos/
+*.report.*
+report.*
+
+# OS / editor
+.DS_Store
+Thumbs.db
